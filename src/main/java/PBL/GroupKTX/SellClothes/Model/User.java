@@ -45,5 +45,6 @@ public class User {
 //            notes="level cannot be empty",
 //            required=true
 //    )
+	private String avatar;
 	private int level;
 }

@@ -2,6 +2,9 @@ package PBL.GroupKTX.SellClothes.Controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServlet.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -43,18 +46,20 @@ public class UserController {
 	
 	// get all user	
     @GetMapping("")
-    public ResponseEntity<?> getListUser() {
+    public ResponseEntity<?> getListUser(HttpServletRequest request) {
         List<User> result = userRepository.findAll();
+        System.out.println(request.getRemoteAddr());
         return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
     }
     
     // check-login
     @GetMapping("/login")
-    public ResponseEntity<?> checkTrueLogin(@RequestBody User user){
+    public ResponseEntity<?> checkTrueLogin(@RequestBody User user,HttpServletRequest request){
+    	System.out.println(request.getRemoteAddr());
     	User account = userRepository.findById(user.getPhone()).get();
     	boolean isUserOrAdmin = BCrypt.checkpw(user.getPassword(), account.getPassword()) &&  user.getLevel() == account.getLevel();
 		if(isUserOrAdmin == true) return  ResponseEntity.status(HttpStatus.OK).body(UserMapper.toUserDto(account));
-		return ResponseEntity.status(HttpStatus.OK).body(isUserOrAdmin);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
     
     // Delete
