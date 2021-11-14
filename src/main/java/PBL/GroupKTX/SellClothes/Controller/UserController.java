@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import PBL.GroupKTX.SellClothes.Model.*;
@@ -30,6 +31,7 @@ import PBL.GroupKTX.SellClothes.Model.Repository.*;
 @RequestMapping("accounts")
 public class UserController {
 	//https://shareprogramming.net/requestbody-va-responsebody-annotation-trong-spring/
+	// Chú ý validate dữ liệu
 	
 	@Autowired
 	public UserRepository userRepository;
@@ -44,39 +46,40 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 	
-	// get all user	
-    @GetMapping("")
-    public ResponseEntity<?> getListUser(HttpServletRequest request) {
-        List<User> result = userRepository.findAll();
-        System.out.println(request.getRemoteAddr());
-        return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
-    }
+//	// get all user	
+//    @GetMapping("")
+//    public ResponseEntity<?> getListUser(HttpServletRequest request) {
+//        List<User> result = userRepository.findAll();
+//        System.out.println(request.getRemoteAddr());
+//        return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
+//    }
     
     // check-login
     @GetMapping("/login")
-    public ResponseEntity<?> checkTrueLogin(@RequestBody User user,HttpServletRequest request){
+    public ResponseEntity<?> checkTrueLogin(@RequestParam String phone,@RequestParam String password,@RequestParam int level,HttpServletRequest request){
     	System.out.println(request.getRemoteAddr());
-    	User account = userRepository.findById(user.getPhone()).get();
-    	boolean isUserOrAdmin = BCrypt.checkpw(user.getPassword(), account.getPassword()) &&  user.getLevel() == account.getLevel();
+    	User account = userRepository.findById(phone).get();
+    	boolean isUserOrAdmin = BCrypt.checkpw(password, account.getPassword()) &&  level == account.getLevel();
 		if(isUserOrAdmin == true) return  ResponseEntity.status(HttpStatus.OK).body(UserMapper.toUserDto(account));
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
     
-    // Delete
-    @DeleteMapping("/delete/{phoneNumber}")
-    public ResponseEntity<?> deleteUser(@PathVariable String phoneNumber) {
-    	userRepository.deleteById(phoneNumber);
-        return ResponseEntity.ok("Delete success");
-    }
+//    // Delete
+//    @DeleteMapping("/delete")
+//    public ResponseEntity<?> deleteUser(@RequestParam String phoneNumber) {
+//    	userRepository.deleteById(phoneNumber);
+//        return ResponseEntity.ok("Delete success");
+//    }
     
     // update
     @PutMapping("/update")
-    public ResponseEntity<?> updateUser(@Valid @RequestBody User user) {
+    public ResponseEntity<?> updateUser( @RequestBody User user) {
         User updateUser = userRepository.findById(user.getPhone()).get();
         updateUser.setName(user.getName());
         String hash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
         updateUser.setPassword(hash);
         updateUser.setLevel(user.getLevel());
+        userRepository.save(updateUser);
         return ResponseEntity.ok(updateUser);
     }
 }

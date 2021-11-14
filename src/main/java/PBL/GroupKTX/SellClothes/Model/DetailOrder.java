@@ -1,6 +1,5 @@
 package PBL.GroupKTX.SellClothes.Model;
 
-import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;

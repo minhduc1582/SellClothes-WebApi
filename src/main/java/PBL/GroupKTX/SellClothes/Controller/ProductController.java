@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.cloudinary.Cloudinary;
@@ -20,38 +21,53 @@ import PBL.GroupKTX.SellClothes.Model.Repository.ProductRepository;
 
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/products")
 public class ProductController {
 	// Name: Smallboiz
 	// GSon retrofit convert Json to object
 	// Retrofit
 	//Gson
-	@Autowired
-	private Cloudinary cloudinary;
+//	@Autowired
+//	private Cloudinary cloudinary;
 	@Autowired
 	private ProductRepository productRepository;
 	
-	@GetMapping("/products")
+	@GetMapping("")
 	public ResponseEntity<?> getAllProducts() {
 		List<Product> product = productRepository.findAll();
 		return ResponseEntity.status(HttpStatus.OK).body(product);
 	}
-	
-	@PostMapping("/products")
+	@GetMapping("/getbyname")
+	public ResponseEntity<?> getProductById(@Validated @RequestParam String nameProduct){
+		List<Product> product = productRepository.findProductByName(nameProduct);
+		return ResponseEntity.status(HttpStatus.OK).body(product);
+	}
+	@GetMapping("/getbyid")
+	public ResponseEntity<?> getProductById(@RequestParam int idProduct){
+		Product product = productRepository.findById(idProduct).get();
+		return ResponseEntity.status(HttpStatus.OK).body(product);
+	}
+	// add Product
+	@PostMapping("/add")
 	public ResponseEntity<?> addProduct(@ModelAttribute ProductDto productDto) {
-		try {
-		Map uploadResult  = this.cloudinary.uploader().upload(productDto.getImage().getBytes(), 
-				ObjectUtils.asMap(
-						"resource_type","auto",
-						"folder","projects/pbl4/products"));
-		String img = (String)uploadResult.get("secure_url");
-		Product product = ProductMapper.toProduct(productDto);
-		product.setImage(img);
+		ProductMapper productMapper = new ProductMapper();
+		productRepository.save(productMapper.toProduct(productDto));
+		return ResponseEntity.status(HttpStatus.OK).body(productMapper.toProduct(productDto));
+
+	}
+	
+	@PutMapping("/update")
+	public ResponseEntity<?> updateProduct(@ModelAttribute ProductDto productDto){
+		ProductMapper productMapper = new ProductMapper();
+		Product product = productRepository.findById(productDto.getId()).get();
+		product = productMapper.toProduct(productDto);
 		productRepository.save(product);
 		return ResponseEntity.status(HttpStatus.OK).body(product);
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		return null;
+	}
+	
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteProductById(@RequestParam int id){
+		productRepository.deleteById(id);
+		return ResponseEntity.status(HttpStatus.OK).body("Delete Success");
 	}
 }
