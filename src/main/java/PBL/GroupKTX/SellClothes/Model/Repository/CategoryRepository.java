@@ -1,12 +1,11 @@
 package PBL.GroupKTX.SellClothes.Model.Repository;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import PBL.GroupKTX.SellClothes.Model.User;
+import PBL.GroupKTX.SellClothes.Model.Category;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String>{
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
+
 }

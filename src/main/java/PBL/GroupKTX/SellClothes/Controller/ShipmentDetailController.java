@@ -18,7 +18,7 @@ import PBL.GroupKTX.SellClothes.Model.ShipmentDetail;
 import PBL.GroupKTX.SellClothes.Model.Repository.ShipmentDetailRepository;
 
 @RestController
-@RequestMapping("/shipmentdetail")
+@RequestMapping("v1/shipmentdetails")
 public class ShipmentDetailController {
 	@Autowired
 	ShipmentDetailRepository shipmentDetailRepository;

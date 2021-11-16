@@ -21,7 +21,7 @@ import PBL.GroupKTX.SellClothes.Model.Repository.ProductRepository;
 
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("v1/products")
 public class ProductController {
 	// Name: Smallboiz
 	// GSon retrofit convert Json to object
@@ -45,6 +45,11 @@ public class ProductController {
 	@GetMapping("/getbyid")
 	public ResponseEntity<?> getProductById(@RequestParam int idProduct){
 		Product product = productRepository.findById(idProduct).get();
+		return ResponseEntity.status(HttpStatus.OK).body(product);
+	}
+	@GetMapping("/getbyidcategory")
+	public ResponseEntity<?> getProductByIdCategory(@RequestParam int idCategory){
+		List<Product> product = productRepository.findProductsByIdCategory(idCategory);
 		return ResponseEntity.status(HttpStatus.OK).body(product);
 	}
 	// add Product

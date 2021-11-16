@@ -7,17 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import PBL.GroupKTX.SellClothes.Model.Repository.DetailOrderRepository;
+import PBL.GroupKTX.SellClothes.Model.Repository.CategoryRepository;
 
 @RestController
-@RequestMapping("v1/detailorders")
-public class DetailOrderController {
+@RequestMapping("v1/categories")
+public class CategoryController {
 	@Autowired
-	DetailOrderRepository detailOrderRepository;
+	CategoryRepository categoryRepository;
 	
 	@GetMapping("")
-	public ResponseEntity<?> GetAllDetailOrder(){
-		return ResponseEntity.status(HttpStatus.OK).body(detailOrderRepository.findAll());
+	public ResponseEntity<?> getAllCategory(){
+		return ResponseEntity.status(HttpStatus.OK).body(categoryRepository.findAll());
 	}
-	
 }

@@ -12,4 +12,7 @@ import PBL.GroupKTX.SellClothes.Model.Product;
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 	@Query(value = "select * from Product where Name like %?1%", nativeQuery = true)
 	public List<Product> findProductByName(String nameProduct);
+	
+	@Query(value ="select * from Product where idCategory = ?1", nativeQuery = true)
+	public List<Product> findProductsByIdCategory(int idCategory);
 }

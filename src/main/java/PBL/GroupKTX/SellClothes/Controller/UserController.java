@@ -1,9 +1,6 @@
 package PBL.GroupKTX.SellClothes.Controller;
 
-import java.util.List;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
