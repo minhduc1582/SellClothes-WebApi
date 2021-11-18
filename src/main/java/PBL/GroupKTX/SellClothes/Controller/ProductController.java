@@ -52,6 +52,10 @@ public class ProductController {
 		List<Product> product = productRepository.findProductsByIdCategory(idCategory);
 		return ResponseEntity.status(HttpStatus.OK).body(product);
 	}
+	@GetMapping("/getbyidorder")
+	public ResponseEntity<?> getProductByIdOrder(@RequestParam int idOrder){
+		return ResponseEntity.status(HttpStatus.OK).body(productRepository.findProductByIdOrder(idOrder));
+	}
 	// add Product
 	@PostMapping("/add")
 	public ResponseEntity<?> addProduct(@ModelAttribute ProductDto productDto) {

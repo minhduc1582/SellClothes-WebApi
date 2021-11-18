@@ -15,4 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 	
 	@Query(value ="select * from Product where idCategory = ?1", nativeQuery = true)
 	public List<Product> findProductsByIdCategory(int idCategory);
+	
+	@Query(value = "select product.* from product INNER JOIN detailorder ON product.id = detailorder.idOrder Where detailorder.idOrder = ?1", nativeQuery = true)
+	public List<Product> findProductByIdOrder(int idOrder); 
 }
