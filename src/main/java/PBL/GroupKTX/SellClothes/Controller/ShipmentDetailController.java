@@ -37,10 +37,10 @@ public class ShipmentDetailController {
 	
 	@PutMapping("/update")
 	public ResponseEntity<?> updateShipmentDetail(@RequestBody ShipmentDetail shipmentDetail){
-		ShipmentDetail result = shipmentDetailRepository.findById(shipmentDetail.getId()).get();
+		ShipmentDetail result = shipmentDetailRepository.findById(shipmentDetail.getIdShipment()).get();
 		result.setAddress(shipmentDetail.getAddress());
 		result.setCity(shipmentDetail.getCity());
-		result.setIdorder(shipmentDetail.getIdorder());
+		result.setIdOrder(shipmentDetail.getIdOrder());
 		result.setName(shipmentDetail.getName());
 		result.setPhone(shipmentDetail.getPhone());
 		shipmentDetailRepository.save(result);

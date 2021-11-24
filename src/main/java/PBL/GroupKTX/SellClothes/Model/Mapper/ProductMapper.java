@@ -19,10 +19,10 @@ public class ProductMapper {
 	public  Product toProduct(ProductDto productDto) {
 		WebApiConfig cloud = new WebApiConfig();
 		Product result = new Product();
-		result.setId(productDto.getId());
-		result.setName(productDto.getName());
-		result.setIdcategory(productDto.getIdcategory());
-		result.setDescriptiion(productDto.getDescription());
+		result.setPid(productDto.getId());
+		result.setPname(productDto.getName());
+		result.setIdCategory(productDto.getIdcategory());
+		result.setDescription(productDto.getDescription());
 		result.setPrice(productDto.getPrice());
 		try {
 		Map uploadResult  = cloud.cloudinary().uploader().upload(productDto.getImage().getBytes(), 

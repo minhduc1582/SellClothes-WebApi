@@ -2,6 +2,7 @@ package PBL.GroupKTX.SellClothes.Model;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,12 +17,13 @@ import lombok.Data;
 @Data
 public class Product {
 	@Id
-	private int id;
-	private String name;
-	private String descriptiion;
+	private int pid;
+	private String pname;
+	private String description;
 	private int price;
 	private String image;
-	private int idcategory;
+	@Column(name="idcategory")
+	private int idCategory;
 	
 //	private Set<Category> categories;
 }

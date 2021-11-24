@@ -1,5 +1,6 @@
 package PBL.GroupKTX.SellClothes.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,11 +12,15 @@ import lombok.Data;
 @Data
 public class ShipmentDetail {
 	@Id
-	private int id;
+	@Column(name="idshipment")
+	private int idShipment;
 	private String name;
 	private String phone;
 	private String address;
 	private String city;
-	private int idorder;
+	@Column(name="idorder")
+	private int idOrder;
+	private String time;
+	private String date;
 //	private Set<Oder> oders;
 }

@@ -1,5 +1,6 @@
 package PBL.GroupKTX.SellClothes.Model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,17 +9,16 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name="detailorder")
+@Table(name="orders")
 @Data
-public class DetailOrder {
+public class Orders {
 	@Id
-	@Column(name="iddetailorder")
-	private int idDetailOrder;
-	private int quantity;
-	@Column(name="idproduct")
-	private int idProduct;
 	@Column(name="idorder")
 	private int idOrder;
-//	private Set<Product> Product;
-//	private Set<Oder> oders;
+	@Column(name="uid")
+	private String uID;
+	@Column(name="totalamount")
+	private int totalAmount;
+	private String state;
+//	private Set<User> users;
 }

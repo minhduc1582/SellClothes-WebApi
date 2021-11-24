@@ -1,5 +1,6 @@
 package PBL.GroupKTX.SellClothes.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,6 +12,7 @@ import lombok.Data;
 @Data
 public class Category {
 	@Id
-	int id;
+	@Column(name ="idcategory")
+	int idCategory;
 	String name;
 }
