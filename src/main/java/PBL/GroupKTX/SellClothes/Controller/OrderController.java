@@ -31,6 +31,10 @@ public class OrderController {
 	public ResponseEntity<?> getAllOrders(){
 		return ResponseEntity.status(HttpStatus.OK).body(orderRepository.findAll());
 	}
+	@GetMapping("/getorderbyuid")
+	public ResponseEntity<?> getordersbyuid(@RequestParam String uid){
+		return ResponseEntity.status(HttpStatus.OK).body(orderRepository.getOrdersByUID(uid));
+	}
 	@GetMapping("/getadminorder")
 	public ResponseEntity<?> getAdminOrder(){
 		List<AdminOrder> listAdminOrders = new ArrayList<AdminOrder>();
@@ -60,4 +64,10 @@ public class OrderController {
 		orderRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Delete Success");
 	}
+	@DeleteMapping("/deleteorderbyuid")
+	public ResponseEntity<?> deleteOrderByUID(@RequestParam String uid){
+		orderRepository.deleteOrderByUID(uid);
+		return ResponseEntity.status(HttpStatus.OK).body("Delete Success");
+	}
+	
 }
