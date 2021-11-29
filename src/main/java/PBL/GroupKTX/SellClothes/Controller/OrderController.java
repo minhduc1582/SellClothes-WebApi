@@ -1,6 +1,9 @@
 package PBL.GroupKTX.SellClothes.Controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import PBL.GroupKTX.SellClothes.Model.Repository.OrderRepository;
 import PBL.GroupKTX.SellClothes.Model.Orders;
+import PBL.GroupKTX.SellClothes.Model.Dto.AdminOrder;
+import PBL.GroupKTX.SellClothes.Model.Mapper.AdminOrderMapper;
 
 @RestController
 @RequestMapping("v1/orders")
@@ -28,7 +33,11 @@ public class OrderController {
 	}
 	@GetMapping("/getadminorder")
 	public ResponseEntity<?> getAdminOrder(){
-		return ResponseEntity.status(HttpStatus.OK).body(orderRepository.getAdminOrderbyId());
+		List<AdminOrder> listAdminOrders = new ArrayList<AdminOrder>();
+		for(Object[] o : orderRepository.getAdminOrderbyId()) {
+			listAdminOrders.add(AdminOrderMapper.toAdminOrder(o));
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(listAdminOrders);
 	}
 	@PostMapping("/add")
 	public ResponseEntity<?> addOrder(@RequestBody Orders order){

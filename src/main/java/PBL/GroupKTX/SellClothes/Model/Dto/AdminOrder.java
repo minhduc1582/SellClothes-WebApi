@@ -17,7 +17,7 @@ public class AdminOrder {
 	private String address;
 	private String city;
 	private String state;
-	private LocalDate time;
+	private String time;
 
-	private int totalAmount;
+	private String totalAmount;
 }

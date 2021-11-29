@@ -3,6 +3,7 @@ package PBL.GroupKTX.SellClothes.Model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -22,5 +23,8 @@ public class ShipmentDetail {
 	private int idOrder;
 	private String time;
 	private String date;
+	
+//	@ManyToOne
+//	private Orders orders;
 //	private Set<Oder> oders;
 }
