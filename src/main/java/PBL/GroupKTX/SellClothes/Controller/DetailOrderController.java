@@ -17,10 +17,13 @@ public class DetailOrderController {
 	DetailOrderRepository detailOrderRepository;
 	
 	@GetMapping("")
-	public ResponseEntity<?> getAllDetailOrders(){
+	public ResponseEntity<?> getAllDetailsOrders(){
 		return ResponseEntity.status(HttpStatus.OK).body(detailOrderRepository.findAll());
 	}
-	
+	@GetMapping("/getbypidandoid")
+	public ResponseEntity<?> getAllDetailsByPidAndOid(String idOrder,String productID){
+		return ResponseEntity.status(HttpStatus.OK).body(detailOrderRepository.getDetailOrdersByPidandOid(idOrder, productID));
+	}
 //	@GetMapping("/getbyphone")
 //	public ResponseEntity<?> getDetailOrdersByPhoneUser(@RequestParam String Phone){
 //		return ResponseEntity.status(HttpStatus.OK).body(detailOrderRepository.getDetailOrdersByPhone(Phone));

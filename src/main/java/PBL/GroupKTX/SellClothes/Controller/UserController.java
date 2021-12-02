@@ -25,7 +25,7 @@ import PBL.GroupKTX.SellClothes.Model.Repository.*;
 
 
 @RestController
-@RequestMapping("accounts")
+@RequestMapping("v1/accounts")
 public class UserController {
 	//https://shareprogramming.net/requestbody-va-responsebody-annotation-trong-spring/
 	// Chú ý validate dữ liệu
