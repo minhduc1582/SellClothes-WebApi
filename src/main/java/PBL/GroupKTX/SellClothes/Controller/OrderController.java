@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,7 +47,9 @@ public class OrderController {
 	@PostMapping("/add")
 	public ResponseEntity<?> addOrder(@RequestBody Orders order){
 		if(order != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(orderRepository.save(order));
+			Orders orderSaved = orderRepository.save(order);
+			Orders orderSavedReturn = orderRepository.GetOrderByBody(orderSaved.getUID(), orderSaved.getState(), orderSaved.getTotalAmount());
+			return ResponseEntity.status(HttpStatus.OK).body(orderSavedReturn);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(new Orders());
 	}

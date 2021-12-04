@@ -20,4 +20,6 @@ public interface OrderRepository extends JpaRepository<Orders, Integer>{
 	public void deleteOrderByUID(String uid);
 	@Query(value = "select * FROM orders WHERE orders.uID = ?1",nativeQuery = true)
 	public List<Orders> getOrdersByUID(String uid);
+	@Query(value = "select * FROM orders WHERE orders.uID = ?1 and orders.state = ?2 and orders.totalAmount = ?3",nativeQuery = true)
+	public Orders GetOrderByBody(String uID, String state, int totalAmount);
 }
