@@ -46,7 +46,7 @@ public class OrderController {
 	@PostMapping("/add")
 	public ResponseEntity<?> addOrder(@RequestBody Orders order){
 		if(order != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(order);
+			return ResponseEntity.status(HttpStatus.OK).body(orderRepository.save(order));
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(new Orders());
 	}
