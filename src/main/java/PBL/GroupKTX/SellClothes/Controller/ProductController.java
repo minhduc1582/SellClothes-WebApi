@@ -44,8 +44,14 @@ public class ProductController {
 	}
 	@GetMapping("/getbyid")
 	public ResponseEntity<?> getProductById(@RequestParam int idProduct){
+		try {
 		Product product = productRepository.findById(idProduct).get();
 		return ResponseEntity.status(HttpStatus.OK).body(product);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(HttpStatus.OK).body(new Product());
+		}
 	}
 	@GetMapping("/getbyidcategory")
 	public ResponseEntity<?> getProductByIdCategory(@RequestParam int idCategory){
@@ -67,16 +73,28 @@ public class ProductController {
 	
 	@PutMapping("/update")
 	public ResponseEntity<?> updateProduct(@ModelAttribute ProductDto productDto){
+		try {
 		ProductMapper productMapper = new ProductMapper();
 		Product product = productRepository.findById(productDto.getId()).get();
 		product = productMapper.toProduct(productDto);
 		productRepository.save(product);
 		return ResponseEntity.status(HttpStatus.OK).body(product);
+		}catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(HttpStatus.OK).body(new Product());
+		}
 	}
 	
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteProductById(@RequestParam int id){
+		try {
 		productRepository.deleteById(id);
 		return ResponseEntity.status(HttpStatus.OK).body("Delete Success");
+		}
+		catch (Exception e) {
+			
+			// TODO: handle exception
+			return ResponseEntity.status(HttpStatus.OK).body("Delete Fail");
+		}
 	}
 }

@@ -52,22 +52,34 @@ public class OrderController {
 	}
 	@PutMapping("/update")
 	public ResponseEntity<?> updateOrder(@RequestBody Orders order){
-		if(order != null) {
+		try {
 			Orders udOder = orderRepository.findById(order.getIdOrder()).get();
 			udOder = order;
 			return ResponseEntity.status(HttpStatus.OK).body(orderRepository.save(udOder));
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(HttpStatus.OK).body(new Orders());
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(new Orders());
+
 	}
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteOrder(@RequestParam int id){
-		orderRepository.deleteById(id);
-		return ResponseEntity.status(HttpStatus.OK).body("Delete Success");
+		try {
+			orderRepository.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body("Delete Success");
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(HttpStatus.OK).body("Delete Fail");
+		}
+
 	}
 	@DeleteMapping("/deleteorderbyuid")
 	public ResponseEntity<?> deleteOrderByUID(@RequestParam String uid){
+		if(orderRepository.getOrdersByUID(uid) != null) {
 		orderRepository.deleteOrderByUID(uid);
 		return ResponseEntity.status(HttpStatus.OK).body("Delete Success");
+		}
+		return ResponseEntity.status(HttpStatus.OK).body("Delete Fail");
 	}
 	
 }

@@ -1,6 +1,8 @@
 package PBL.GroupKTX.SellClothes.Controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -43,22 +45,28 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 	
-//	// get all user	
-//    @GetMapping("")
-//    public ResponseEntity<?> getListUser(HttpServletRequest request) {
-//        List<User> result = userRepository.findAll();
-//        System.out.println(request.getRemoteAddr());
-//        return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
-//    }
+	// get all user	
+    @GetMapping("")
+    public ResponseEntity<?> getListUser(HttpServletRequest request) {
+        List<User> result = userRepository.findAll();
+        System.out.println(request.getRemoteAddr());
+        return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAll());
+    }
     
     // check-login
     @GetMapping("/login")
     public ResponseEntity<?> checkTrueLogin(@RequestParam String phone,@RequestParam String password,@RequestParam int level,HttpServletRequest request){
     	System.out.println(request.getRemoteAddr());
+    	try {
     	User account = userRepository.findById(phone).get();
     	boolean isUserOrAdmin = BCrypt.checkpw(password, account.getPassword()) &&  level == account.getLevel();
 		if(isUserOrAdmin == true) return  ResponseEntity.status(HttpStatus.OK).body(UserMapper.toUserDto(account));
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    	}
+    	catch (Exception e) {
+			// TODO: handle exception
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new User());
+		}
+    	return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new User());
     }
     
 //    // Delete
@@ -71,12 +79,18 @@ public class UserController {
     // update
     @PutMapping("/update")
     public ResponseEntity<?> updateUser( @RequestBody User user) {
+    	try {
         User updateUser = userRepository.findById(user.getPhone()).get();
         updateUser.setName(user.getName());
         String hash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
         updateUser.setPassword(hash);
         updateUser.setLevel(user.getLevel());
         userRepository.save(updateUser);
-        return ResponseEntity.ok(updateUser);
+        return ResponseEntity.status(HttpStatus.OK).body(updateUser);
+    	}catch (Exception e) {
+			// TODO: handle exception
+    		 return ResponseEntity.status(HttpStatus.OK).body(new User());
+		}
+        
     }
 }
