@@ -35,6 +35,7 @@ public class DetailOrderController {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.OK).body(new DetailOrder());
 		}
 	}

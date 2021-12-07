@@ -1,14 +1,11 @@
 package PBL.GroupKTX.SellClothes.Model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.Transient;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import lombok.Data;
 
