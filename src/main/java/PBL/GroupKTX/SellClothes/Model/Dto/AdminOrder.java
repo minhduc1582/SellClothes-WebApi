@@ -1,9 +1,5 @@
 package PBL.GroupKTX.SellClothes.Model.Dto;
 
-import java.time.LocalDate;
-
-import javax.persistence.Entity;
-
 import lombok.*;
 
 @Getter
