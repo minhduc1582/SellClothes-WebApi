@@ -6,15 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import PBL.GroupKTX.SellClothes.Model.Dto.AdminOrder;
 import PBL.GroupKTX.SellClothes.Model.Dto.Cart;
-import PBL.GroupKTX.SellClothes.Model.Mapper.AdminOrderMapper;
 import PBL.GroupKTX.SellClothes.Model.Mapper.CartMapper;
 import PBL.GroupKTX.SellClothes.Model.Repository.CartRepository;
 

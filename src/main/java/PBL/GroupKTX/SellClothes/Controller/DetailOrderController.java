@@ -6,12 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import PBL.GroupKTX.SellClothes.Model.DetailOrder;
+import PBL.GroupKTX.SellClothes.Model.Orders;
 import PBL.GroupKTX.SellClothes.Model.Repository.DetailOrderRepository;
 
 @RestController
@@ -48,6 +50,18 @@ public class DetailOrderController {
 			// TODO: handle exception
 			return ResponseEntity.status(HttpStatus.OK).body("Delete Fail");
 		}
+	}
+	@PutMapping("/update")
+	public ResponseEntity<?> updateOrder(@RequestBody DetailOrder dorder){
+		try {
+			DetailOrder udOder = detailOrderRepository.findById(dorder.getIdDetailorder()).get();
+			udOder = dorder;
+			return ResponseEntity.status(HttpStatus.OK).body(detailOrderRepository.save(udOder));
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(HttpStatus.OK).body(new Orders());
+		}
+
 	}
 //	@GetMapping("/getbyphone")
 //	public ResponseEntity<?> getDetailOrdersByPhoneUser(@RequestParam String Phone){
