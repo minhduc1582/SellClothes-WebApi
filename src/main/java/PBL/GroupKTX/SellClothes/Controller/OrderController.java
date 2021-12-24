@@ -78,11 +78,14 @@ public class OrderController {
 	}
 	@DeleteMapping("/deleteorderbyuid")
 	public ResponseEntity<?> deleteOrderByUID(@RequestParam String uid){
-		if(orderRepository.getOrdersByUID(uid) != null) {
-		orderRepository.deleteOrderByUID(uid);
+		try {
+		Orders orders =orderRepository.getOrdersByUID(uid).get(0);
+		orderRepository.deleteById(orders.getIdOrder());
 		return ResponseEntity.status(HttpStatus.OK).body("Delete Success");
-		}
+		}catch (Exception e) {
+			// TODO: handle exception
 		return ResponseEntity.status(HttpStatus.OK).body("Delete Fail");
+		}
 	}
 	
 }
